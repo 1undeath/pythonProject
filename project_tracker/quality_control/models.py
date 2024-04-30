@@ -48,6 +48,8 @@ class Bug_Report(models.Model):
         null=True,
         blank=True
     )
+    def __str__(self):
+        return self.title
 class FeatureRequest(models.Model):
     STATUS_CHOICES = [
         ("review", "рассмотрение"),
@@ -94,3 +96,5 @@ class FeatureRequest(models.Model):
         null=True,
         blank=True
     )
+    def __str__(self):
+        return self.title

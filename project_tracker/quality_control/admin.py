@@ -8,10 +8,18 @@ class Bug_ReportInline(admin.TabularInline):
     readonly_fields = ('created_at', 'updated_at')
     can_delete = True
     show_change_link = True
+
+class FeatureRequestInline(admin.TabularInline):
+    model = FeatureRequest
+    extra = 0
+    fields = ('task', 'description', 'assignee', 'priority', 'status', 'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')
+    can_delete = True
+    show_change_link = True
 @admin.register(Bug_Report)
 class Bug_ReportAdmin(admin.ModelAdmin):
-    list_display = ('task', 'project', 'assignee', 'priority', 'status', 'created_at', 'updated_at')
-    list_filter = ('status', 'assignee', 'project','priority')
+    list_display = ('title','task', 'project', 'assignee', 'priority', 'status', 'created_at', 'updated_at')
+    list_filter = ('title','status', 'assignee', 'project','priority')
     search_fields = ('task', 'description')
     list_editable = ('status', 'assignee')
     readonly_fields = ('created_at', 'updated_at')
@@ -19,8 +27,8 @@ class Bug_ReportAdmin(admin.ModelAdmin):
 
 @admin.register(FeatureRequest)
 class FeatureRequestAdmin(admin.ModelAdmin):
-    list_display = ('task', 'project', 'assignee', 'status', 'created_at', 'updated_at')
+    list_display = ('title','task', 'assignee', 'status', 'created_at', 'updated_at')
     list_filter = ('status', 'assignee', 'project')
-    search_fields = ('task', 'description')
+    search_fields = ('title','task', 'description')
     list_editable = ('status', 'assignee')
     readonly_fields = ('created_at', 'updated_at')

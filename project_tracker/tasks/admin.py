@@ -1,8 +1,16 @@
 from django.contrib import admin
 from .models import Project,Task
-from quality_control.models import Bug_Report
+from quality_control.models import Bug_Report,FeatureRequest
 class Bug_ReportInline(admin.TabularInline):
     model = Bug_Report
+    extra = 0
+    fields = ('task', 'description', 'assignee', 'priority', 'status', 'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')
+    can_delete = True
+    show_change_link = True
+
+class FeatureRequestInline(admin.TabularInline):
+    model = FeatureRequest
     extra = 0
     fields = ('task', 'description', 'assignee', 'priority', 'status', 'created_at', 'updated_at')
     readonly_fields = ('created_at', 'updated_at')
@@ -21,7 +29,7 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     ordering = ('created_at',)
     date_hierarchy = 'created_at'
-    inlines = [TaskInline]
+    inlines = [TaskInline,Bug_ReportInline,FeatureRequestInline]
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('name', 'project', 'assignee', 'status', 'created_at', 'updated_at')
@@ -29,4 +37,4 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     list_editable = ('status', 'assignee')
     readonly_fields = ('created_at', 'updated_at')
-    inlines = [Bug_ReportInline]  # Добавьте Bug_ReportInline сюда
+    inlines = [Bug_ReportInline,FeatureRequestInline]  # Добавьте Bug_ReportInline сюда
